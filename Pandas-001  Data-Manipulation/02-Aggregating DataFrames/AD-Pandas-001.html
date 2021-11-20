@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+
+<title>02-Aggregating DataFrames</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/style.css">
+<link rel="stylesheet" type="text/css" href="assets/advance.css">
+
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+body {
+  overflow: visible;
+  padding: 8px;
+}
+
+div#notebook {
+  overflow: visible;
+  border-top: none;
+}@media print {
+  div.cell {
+    display: block;
+    page-break-inside: avoid;
+  } 
+  div.output_wrapper { 
+    display: block;
+    page-break-inside: avoid; 
+  }
+  div.output { 
+    display: block;
+    page-break-inside: avoid; 
+  }
+}
+</style>
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="custom.css">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
+<body>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="AGGREGATING-DATAFRAMES">AGGREGATING DATAFRAMES<a class="anchor-link" href="#AGGREGATING-DATAFRAMES">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Mean and median</strong><br>
+Summary statistics are exactly what they sound like - they summarize many numbers in one statistic.<br>
+For example, mean, median, minimum, maximum, and standard deviation are summary statistics.<br>
+Calculating summary statistics allows you to get a better sense of your data, even if there's a lot of it.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Load Pandas and data into workspace</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Load pandas and dataset</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sales_subset.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Explore your new DataFrame first by printing the first few rows of the sales DataFrame.<br>
+Print information about the columns in sales.<br>
+Print the mean of the weekly_sales column.<br>
+Print the median of the weekly_sales column<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Print the head of the sales DataFrame</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Print the info about the sales DataFrame</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+
+<span class="c1"># Print the mean of weekly_sales</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;weekly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+
+<span class="c1"># Print the median of weekly_sales</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;weekly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Unnamed: 0  store type  department        date  weekly_sales  is_holiday  \
+0           0      1    A           1  2010-02-05      24924.50       False   
+1           1      1    A           1  2010-03-05      21827.90       False   
+2           2      1    A           1  2010-04-02      57258.43       False   
+3           3      1    A           1  2010-05-07      17413.94       False   
+4           4      1    A           1  2010-06-04      17558.09       False   
+
+   temperature_c  fuel_price_usd_per_l  unemployment  
+0       5.727778              0.679451         8.106  
+1       8.055556              0.693452         8.106  
+2      16.816667              0.718284         7.808  
+3      22.527778              0.748928         7.808  
+4      27.050000              0.714586         7.808  
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 10774 entries, 0 to 10773
+Data columns (total 10 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   Unnamed: 0            10774 non-null  int64  
+ 1   store                 10774 non-null  int64  
+ 2   type                  10774 non-null  object 
+ 3   department            10774 non-null  int64  
+ 4   date                  10774 non-null  object 
+ 5   weekly_sales          10774 non-null  float64
+ 6   is_holiday            10774 non-null  bool   
+ 7   temperature_c         10774 non-null  float64
+ 8   fuel_price_usd_per_l  10774 non-null  float64
+ 9   unemployment          10774 non-null  float64
+dtypes: bool(1), float64(4), int64(3), object(2)
+memory usage: 768.2+ KB
+None
+23843.95014850566
+12049.064999999999
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Summarizing-dates">Summarizing dates<a class="anchor-link" href="#Summarizing-dates">&#182;</a></h1><p>Summary statistics can also be calculated on date columns that have values with the data type datetime64.<br>
+Some summary statistics — like mean — don't make a ton of sense on dates, but others are super helpful, for example, minimum and maximum, which allow you to see what time range your data covers.<br></p>
+<p>Print the maximum of the date column.<br>
+Print the minimum of the date column.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Print the maximum of the date column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="c1"># Print the minimum of the date column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>2012-10-26
+2010-02-05
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Efficient-summaries">Efficient summaries<a class="anchor-link" href="#Efficient-summaries">&#182;</a></h1><p>While pandas and NumPy have tons of functions, sometimes, you may need a different function to summarize your data.<br></p>
+<p>The .agg() method allows you to apply your own custom functions to a DataFrame, as well as apply functions to more than one column of a DataFrame at once, making your aggregations super-efficient. For example,<br></p>
+<p>df['column'].agg(function)<br></p>
+<p>In the custom function for this exercise, "IQR" is short for inter-quartile range, which is the 75th percentile minus the 25th percentile. It's an alternative to standard deviation that is helpful if your data contains outliers.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the custom iqr function defined for you along with .agg() to print the IQR of the temperature_c column of sales</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># A custom IQR function</span>
+<span class="k">def</span> <span class="nf">iqr</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">column</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span> <span class="o">-</span> <span class="n">column</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+    
+<span class="c1"># Print IQR of the temperature_c column</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;temperature_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">iqr</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>16.583333333333336
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Update the column selection to use the custom iqr function with .agg() to print the IQR of temperature_c, fuel_price_usd_per_l, and unemployment, in that order.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># A custom IQR function</span>
+<span class="k">def</span> <span class="nf">iqr</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">column</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span> <span class="o">-</span> <span class="n">column</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+
+<span class="c1"># Update to print IQR of temperature_c, fuel_price_usd_per_l, &amp; unemployment</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[[</span><span class="s2">&quot;temperature_c&quot;</span><span class="p">,</span> <span class="s1">&#39;fuel_price_usd_per_l&#39;</span><span class="p">,</span><span class="s1">&#39;unemployment&#39;</span> <span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">iqr</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>temperature_c           16.583333
+fuel_price_usd_per_l     0.073176
+unemployment             0.565000
+dtype: float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Update the aggregation functions called by .agg(): include iqr and np.median in that order</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import NumPy and create custom IQR function</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">iqr</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">column</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span> <span class="o">-</span> <span class="n">column</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+
+<span class="c1"># Update to print IQR and median of temperature_c, fuel_price_usd_per_l, &amp; unemployment</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="p">[[</span><span class="s2">&quot;temperature_c&quot;</span><span class="p">,</span> <span class="s2">&quot;fuel_price_usd_per_l&quot;</span><span class="p">,</span> <span class="s2">&quot;unemployment&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">iqr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>        temperature_c  fuel_price_usd_per_l  unemployment
+iqr         16.583333              0.073176         0.565
+median      16.966667              0.743381         8.099
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Cumulative-statistics">Cumulative statistics<a class="anchor-link" href="#Cumulative-statistics">&#182;</a></h1><p>Cumulative statistics can also be helpful in tracking summary statistics over time.<br>
+In this exercise, you'll calculate the cumulative sum and cumulative max of a department's weekly sales, which will allow you to identify what the total sales were so far as well as what the highest weekly sales were so far.<br></p>
+<p>A DataFrame called sales_1_1 has been created for you, which contains the sales data for department 1 of store 1. pandas is loaded as pd.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Creacting DATAFRAME</span>
+<span class="n">sales_s_1</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;store&#39;</span><span class="p">]</span> <span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sales_1_1</span> <span class="o">=</span> <span class="n">sales_s_1</span><span class="p">[</span><span class="n">sales_s_1</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">#Print first five elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales_1_1</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Unnamed: 0  store type  department        date  weekly_sales  is_holiday  \
+0           0      1    A           1  2010-02-05      24924.50       False   
+1           1      1    A           1  2010-03-05      21827.90       False   
+2           2      1    A           1  2010-04-02      57258.43       False   
+3           3      1    A           1  2010-05-07      17413.94       False   
+4           4      1    A           1  2010-06-04      17558.09       False   
+
+   temperature_c  fuel_price_usd_per_l  unemployment  
+0       5.727778              0.679451         8.106  
+1       8.055556              0.693452         8.106  
+2      16.816667              0.718284         7.808  
+3      22.527778              0.748928         7.808  
+4      27.050000              0.714586         7.808  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sort the rows of sales_1_1 by the date column in ascending order.<br>
+Get the cumulative sum of weekly_sales and add it as a new column of sales_1_1 called cum_weekly_sales.<br>
+Get the cumulative maximum of weekly_sales, and add it as a column called cum_max_sales.<br>
+Print the date, weekly_sales, cum_weekly_sales, and cum_max_sales columns.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Sort sales_1_1 by date</span>
+<span class="n">sales_1_1</span> <span class="o">=</span> <span class="n">sales_1_1</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get the cumulative sum of weekly_sales, add as cum_weekly_sales col</span>
+<span class="n">sales_1_1</span><span class="p">[</span><span class="s1">&#39;cum_weekly_sales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales_1_1</span><span class="p">[</span><span class="s1">&#39;weekly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+
+<span class="c1"># Get the cumulative max of weekly_sales, add as cum_max_sales col</span>
+<span class="n">sales_1_1</span><span class="p">[</span><span class="s1">&#39;cum_max_sales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sales_1_1</span><span class="p">[</span><span class="s1">&#39;weekly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cummax</span><span class="p">()</span>
+
+<span class="c1"># See the columns you calculated</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales_1_1</span><span class="p">[[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;weekly_sales&quot;</span><span class="p">,</span> <span class="s2">&quot;cum_weekly_sales&quot;</span><span class="p">,</span> <span class="s2">&quot;cum_max_sales&quot;</span><span class="p">]])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>          date  weekly_sales  cum_weekly_sales  cum_max_sales
+0   2010-02-05      24924.50          24924.50       24924.50
+1   2010-03-05      21827.90          46752.40       24924.50
+2   2010-04-02      57258.43         104010.83       57258.43
+3   2010-05-07      17413.94         121424.77       57258.43
+4   2010-06-04      17558.09         138982.86       57258.43
+5   2010-07-02      16333.14         155316.00       57258.43
+6   2010-08-06      17508.41         172824.41       57258.43
+7   2010-09-03      16241.78         189066.19       57258.43
+8   2010-10-01      20094.19         209160.38       57258.43
+9   2010-11-05      34238.88         243399.26       57258.43
+10  2010-12-03      22517.56         265916.82       57258.43
+11  2011-01-07      15984.24         281901.06       57258.43
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Dropping-duplicates">Dropping duplicates<a class="anchor-link" href="#Dropping-duplicates">&#182;</a></h1><p>Removing duplicates is an essential skill to get accurate counts because often, you don't want to count the same thing multiple times.<br>
+In this exercise, you'll create some new DataFrames using unique values from sales.<br></p>
+<p>sales is available and pandas is imported as pd.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Remove rows of sales with duplicate pairs of store and type and save as store_types and print the head.<br>
+Remove rows of sales with duplicate pairs of store and department and save as store_depts and print the head.<br>
+Subset the rows that are holiday weeks using the is_holiday column, and drop the duplicate dates, saving as holiday_dates.<br>
+Select the date column of holiday_dates, and print.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Drop duplicate store/type combinations</span>
+<span class="n">store_types</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;store&#39;</span><span class="p">,</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">store_types</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Drop duplicate store/department combinations</span>
+<span class="n">store_depts</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;store&#39;</span><span class="p">,</span><span class="s1">&#39;department&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">store_depts</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Subset the rows where is_holiday is True and drop duplicate dates</span>
+<span class="n">holiday_dates</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s1">&#39;is_holiday&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print date col of holiday_dates</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">holiday_dates</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>      Unnamed: 0  store type  department        date  weekly_sales  \
+0              0      1    A           1  2010-02-05      24924.50   
+901          901      2    A           1  2010-02-05      35034.06   
+1798        1798      4    A           1  2010-02-05      38724.42   
+2699        2699      6    A           1  2010-02-05      25619.00   
+3593        3593     10    B           1  2010-02-05      40212.84   
+
+      is_holiday  temperature_c  fuel_price_usd_per_l  unemployment  
+0          False       5.727778              0.679451         8.106  
+901        False       4.550000              0.679451         8.324  
+1798       False       6.533333              0.686319         8.623  
+2699       False       4.683333              0.679451         7.259  
+3593       False      12.411111              0.782478         9.765  
+    Unnamed: 0  store type  department        date  weekly_sales  is_holiday  \
+0            0      1    A           1  2010-02-05      24924.50       False   
+12          12      1    A           2  2010-02-05      50605.27       False   
+24          24      1    A           3  2010-02-05      13740.12       False   
+36          36      1    A           4  2010-02-05      39954.04       False   
+48          48      1    A           5  2010-02-05      32229.38       False   
+
+    temperature_c  fuel_price_usd_per_l  unemployment  
+0        5.727778              0.679451         8.106  
+12       5.727778              0.679451         8.106  
+24       5.727778              0.679451         8.106  
+36       5.727778              0.679451         8.106  
+48       5.727778              0.679451         8.106  
+      Unnamed: 0  store type  department        date  weekly_sales  \
+498          498      1    A          45  2010-09-10         11.47   
+691          691      1    A          77  2011-11-25       1431.00   
+2315        2315      4    A          47  2010-02-12        498.00   
+6735        6735     19    A          39  2012-09-07         13.41   
+6810        6810     19    A          47  2010-12-31       -449.00   
+6815        6815     19    A          47  2012-02-10         15.00   
+6820        6820     19    A          48  2011-09-09        197.00   
+
+      is_holiday  temperature_c  fuel_price_usd_per_l  unemployment  
+498         True      25.938889              0.677602         7.787  
+691         True      15.633333              0.854861         7.866  
+2315        True      -1.755556              0.679715         8.623  
+6735        True      22.333333              1.076766         8.193  
+6810        True      -1.861111              0.881278         8.067  
+6815        True       0.338889              1.010723         7.943  
+6820        True      20.155556              1.038197         7.806  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Counting-categorical-variables">Counting categorical variables<a class="anchor-link" href="#Counting-categorical-variables">&#182;</a></h1><p>Counting is a great way to get an overview of your data and to spot curiosities that you might not notice otherwise.<br> 
+In this exercise, you'll count the number of each type of store and the number of each department number using the DataFrames you created in the previous exercise:<br></p>
+<p><strong>Drop duplicate store/type combinations</strong><br>
+store_types = sales.drop_duplicates(subset=["store", "type"])<br></p>
+<p><strong>Drop duplicate store/department combinations</strong><br>
+store_depts = sales.drop_duplicates(subset=["store", "department"])<br></p>
+<p>The store_types and store_depts DataFrames you created in the last exercise are available, and pandas is imported as pd.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Count the number of stores of each store type in store_types.<br>
+Count the proportion of stores of each store type in store_types.<br>
+Count the number of different departments in store_depts, sorting the counts in descending order.<br>
+Count the proportion of different departments in store_depts, sorting the proportions in descending order<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Count the number of stores of each type</span>
+<span class="n">store_counts</span> <span class="o">=</span> <span class="n">store_types</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">store_counts</span><span class="p">)</span>
+
+<span class="c1"># Get the proportion of stores of each type</span>
+<span class="n">store_props</span> <span class="o">=</span> <span class="n">store_types</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">store_props</span><span class="p">)</span>
+
+<span class="c1"># Count the number of each department number and sort</span>
+<span class="n">dept_counts_sorted</span> <span class="o">=</span> <span class="n">store_depts</span><span class="p">[</span><span class="s2">&quot;department&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dept_counts_sorted</span><span class="p">)</span>
+
+<span class="c1"># Get the proportion of departments of each number and sort</span>
+<span class="n">dept_props_sorted</span> <span class="o">=</span> <span class="n">store_depts</span><span class="p">[</span><span class="s2">&quot;department&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dept_props_sorted</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>A    11
+B     1
+Name: type, dtype: int64
+A    0.916667
+B    0.083333
+Name: type, dtype: float64
+1     12
+55    12
+72    12
+71    12
+67    12
+      ..
+37    10
+48     8
+50     6
+39     4
+43     2
+Name: department, Length: 80, dtype: int64
+1     0.012917
+55    0.012917
+72    0.012917
+71    0.012917
+67    0.012917
+        ...   
+37    0.010764
+48    0.008611
+50    0.006459
+39    0.004306
+43    0.002153
+Name: department, Length: 80, dtype: float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="What-percent-of-sales-occurred-at-each-store-type?">What percent of sales occurred at each store type?<a class="anchor-link" href="#What-percent-of-sales-occurred-at-each-store-type?">&#182;</a></h1><p>While .groupby() is useful, you can calculate grouped summary statistics without it.<br></p>
+<p>Walmart distinguishes three types of stores: "supercenters," "discount stores," and "neighborhood markets," encoded in this dataset as type "A," "B," and "C." In this exercise, you'll calculate the total sales made at each store type, without using .groupby().<br> 
+You can then use these numbers to see what proportion of Walmart's total sales were made at each type.<br></p>
+<p>sales is available and pandas is imported as pd.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Calculate the total weekly_sales over the whole dataset.<br>
+Subset for type "A" stores, and calculate their total weekly sales.<br>
+Do the same for type "B" and type "C" stores.<br>
+Combine the A/B/C results into a list, and divide by sales_all to get the proportion of sales by type.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Calc total weekly sales</span>
+<span class="n">sales_all</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Subset for type A stores, calc total weekly sales</span>
+<span class="n">sales_A</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Subset for type B stores, calc total weekly sales</span>
+<span class="n">sales_B</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Subset for type C stores, calc total weekly sales</span>
+<span class="n">sales_C</span> <span class="o">=</span> <span class="n">sales</span><span class="p">[</span><span class="n">sales</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">][</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Get proportion for each type</span>
+<span class="n">sales_propn_by_type</span> <span class="o">=</span> <span class="p">[</span><span class="n">sales_A</span><span class="p">,</span><span class="n">sales_B</span><span class="p">,</span> <span class="n">sales_C</span><span class="p">]</span> <span class="o">/</span> <span class="n">sales_all</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales_propn_by_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0.9097747 0.0902253 0.       ]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Calculations-with-.groupby()">Calculations with .groupby()<a class="anchor-link" href="#Calculations-with-.groupby()">&#182;</a></h1><p>The .groupby() method makes life much easier. <br>
+In this exercise, you'll perform the same calculations as last time, except you'll use the .groupby() method. <br>
+You'll also perform calculations on data grouped by two variables to see if sales differ by store type depending on if it's a holiday week or not.<br></p>
+<p>sales is available and pandas is loaded as pd</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Group sales by "type", take the sum of "weekly_sales", and store as sales_by_type.<br>
+Calculate the proportion of sales at each store type by dividing by the sum of sales_by_type. Assign to sales_propn_by_type.<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Group by type; calc total weekly sales</span>
+<span class="n">sales_by_type</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)[</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Get proportion for each type</span>
+<span class="n">sales_propn_by_type</span> <span class="o">=</span> <span class="n">sales_by_type</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sales_by_type</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales_propn_by_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>type
+A    0.909775
+B    0.090225
+Name: weekly_sales, dtype: float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Calculations-with-.groupby()">Calculations with .groupby()<a class="anchor-link" href="#Calculations-with-.groupby()">&#182;</a></h1><p>The .groupby() method makes life much easier. <br>
+In this exercise, you'll perform the same calculations as last time, except you'll use the .groupby() method.<br>
+You'll also perform calculations on data grouped by two variables to see if sales differ by store type depending on if it's a holiday week or not.<br></p>
+<p>sales is available and pandas is loaded as pd</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Group sales by "type" and "is_holiday", take the sum of weekly_sales, and store as sales_by_type_is_holiday</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># From previous step</span>
+<span class="n">sales_by_type</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)[</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Group by type and is_holiday; calc total weekly sales</span>
+<span class="n">sales_by_type_is_holiday</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="s2">&quot;is_holiday&quot;</span><span class="p">])[</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales_by_type_is_holiday</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>type  is_holiday
+A     False         2.336927e+08
+      True          2.360181e+04
+B     False         2.317678e+07
+      True          1.621410e+03
+Name: weekly_sales, dtype: float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Multiple-grouped-summaries">Multiple grouped summaries<a class="anchor-link" href="#Multiple-grouped-summaries">&#182;</a></h1><p>Earlier in this chapter, you saw that the .agg() method is useful to compute multiple statistics on multiple variables.<br>
+It also works with grouped data.<br>
+NumPy, which is imported as np, has many different summary statistics functions, including: np.min, np.max, np.mean, and np.median.<br></p>
+<p>sales is available and pandas is imported as pd</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Import numpy with the alias np.<br>
+Get the min, max, mean, and median of weekly_sales for each store type using .groupby() and .agg(). Store this as sales_stats.<br>
+Make sure to use numpy functions!<br>
+Get the min, max, mean, and median of unemployment and fuel_price_usd_per_l for each store type.<br> 
+Store this as unemp_fuel_stats.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import numpy with the alias np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># For each store type, aggregate weekly_sales: get min, max, mean, and median</span>
+<span class="n">sales_stats</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)[</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">])</span>
+
+<span class="c1"># Print sales_stats</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales_stats</span><span class="p">)</span>
+
+<span class="c1"># For each store type, aggregate unemployment and fuel_price_usd_per_l: get min, max, mean, and median</span>
+<span class="n">unemp_fuel_stats</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)[[</span><span class="s2">&quot;unemployment&quot;</span><span class="p">,</span> <span class="s2">&quot;fuel_price_usd_per_l&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">])</span>
+
+<span class="c1"># Print unemp_fuel_stats</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unemp_fuel_stats</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>        amin       amax          mean    median
+type                                           
+A    -1098.0  293966.05  23674.667242  11943.92
+B     -798.0  232558.51  25696.678370  13336.08
+     unemployment                         fuel_price_usd_per_l            \
+             amin   amax      mean median                 amin      amax   
+type                                                                       
+A           3.879  8.992  7.972611  8.067             0.664129  1.107410   
+B           7.170  9.765  9.279323  9.199             0.760023  1.107674   
+
+                          
+          mean    median  
+type                      
+A     0.744619  0.735455  
+B     0.805858  0.803348  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Pivoting-on-one-variable">Pivoting on one variable<a class="anchor-link" href="#Pivoting-on-one-variable">&#182;</a></h1><p>Pivot tables are the standard way of aggregating data in spreadsheets. In pandas, pivot tables are essentially just another way of performing grouped calculations. <br>
+That is, the .pivot_table() method is just an alternative to .groupby().<br></p>
+<p>In this exercise, you'll perform calculations using .pivot_table() to replicate the calculations you performed in the last lesson using .groupby().<br></p>
+<p>sales is available and pandas is imported as pd</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Get the mean weekly_sales by type using .pivot_table() and store as mean_sales_by_type</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Pivot for mean weekly_sales for each store type</span>
+<span class="n">mean_sales_by_type</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+
+<span class="c1"># Print mean_sales_by_type</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_sales_by_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>      weekly_sales
+type              
+A     23674.667242
+B     25696.678370
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Get the mean and median (using NumPy functions) of weekly_sales by type using .pivot_table() and store as mean_med_sales_by_type.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import NumPy as np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Pivot for mean and median weekly_sales for each store type</span>
+<span class="n">mean_med_sales_by_type</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="n">aggfunc</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">])</span>
+<span class="c1"># Print mean_med_sales_by_type</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_med_sales_by_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>              mean       median
+      weekly_sales weekly_sales
+type                           
+A     23674.667242     11943.92
+B     25696.678370     13336.08
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Get the mean of weekly_sales by type and is_holiday using .pivot_table() and store as mean_sales_by_type_holiday.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Pivot for mean weekly_sales by store type and holiday </span>
+<span class="n">mean_sales_by_type_holiday</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;is_holiday&quot;</span><span class="p">)</span>
+
+<span class="c1"># Print mean_sales_by_type_holiday</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_sales_by_type_holiday</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>is_holiday         False       True
+type                               
+A           23768.583523  590.04525
+B           25751.980533  810.70500
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Fill-in-missing-values-and-sum-values-with-pivot-tables">Fill in missing values and sum values with pivot tables<a class="anchor-link" href="#Fill-in-missing-values-and-sum-values-with-pivot-tables">&#182;</a></h1><p>The .pivot_table() method has several useful arguments, including fill_value and margins.<br></p>
+<p>fill_value replaces missing values with a real value (known as imputation).<br>
+What to replace missing values with is a topic big enough to have its own course (Dealing with Missing Data in Python), but the simplest thing to do is to substitute a dummy value.<br>
+margins is a shortcut for when you pivoted by two variables, but also wanted to pivot by each of those variables separately:<br> 
+it gives the row and column totals of the pivot table contents.<br>
+In this exercise, you'll practice using these arguments to up your pivot table skills, which will help you crunch numbers more efficiently!<br></p>
+<p>sales is available and pandas is imported as pd</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Print the mean weekly_sales by department and type, filling in any missing values with 0</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Print mean weekly_sales by department and type; fill missing values with 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;department&#39;</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;type&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>type                    A              B
+department                              
+1            30961.725379   44050.626667
+2            67600.158788  112958.526667
+3            17160.002955   30580.655000
+4            44285.399091   51219.654167
+5            34821.011364   63236.875000
+...                   ...            ...
+95          123933.787121   77082.102500
+96           21367.042857    9528.538333
+97           28471.266970    5828.873333
+98           12875.423182     217.428333
+99             379.123659       0.000000
+
+[80 rows x 2 columns]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Print the mean weekly_sales by department and type, filling in any missing values with 0 and summing all rows and columns.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Print the mean weekly_sales by department and type; fill missing values with 0s; sum all rows and cols</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sales</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;weekly_sales&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&quot;department&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>type                   A              B           All
+department                                           
+1           30961.725379   44050.626667  32052.467153
+2           67600.158788  112958.526667  71380.022778
+3           17160.002955   30580.655000  18278.390625
+4           44285.399091   51219.654167  44863.253681
+5           34821.011364   63236.875000  37189.000000
+...                  ...            ...           ...
+96          21367.042857    9528.538333  20337.607681
+97          28471.266970    5828.873333  26584.400833
+98          12875.423182     217.428333  11820.590278
+99            379.123659       0.000000    379.123659
+All         23674.667242   25696.678370  23843.950149
+
+[81 rows x 3 columns]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</body>
+
+ 
+
+
+</html>
