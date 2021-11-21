@@ -1,5 +1,5 @@
 # DATA-SCIENCE
-![IMAGE](Group 1(2).png)
+![IMAGE](teau.png)
 
 
 Gain the career-building Python skills you need to succeed as a data scientist.<br />
