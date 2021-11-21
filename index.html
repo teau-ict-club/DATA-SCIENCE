@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Chrome, Firefox OS and Opera mobile address bar theming -->
+    <meta name="theme-color" content="#000000">
+    <!-- Windows Phone mobile address bar theming -->
+    <meta name="msapplication-navbutton-color" content="#000000">
+    <!-- iOS Safari mobile address bar theming -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#000000">
+    <!-- SEO -->
+    <meta name="description" content="Halfmoon is a responsive front-end framework that is great for building dashboards and tools. Built-in dark mode, full customizability using CSS variables (around 1,500 variables), optional JavaScript library (no jQuery), Bootstrap like classes, and cross-browser compatibility (including IE11).">
+    <meta name="author" content="Halfmoon">
+    <meta name="keywords" content="Halfmoon, HTML, CSS, JavaScript, CSS Framework, dark mode, dark-mode, darkmode, dark theme, dark-theme, darktheme, Bootstrap, Foundation, Bulma, dashboard, UI, UI framework, user interface, design, design system">
+    <!-- Open graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.gethalfmoon.com/page-sections-demo/?sidebar-type=overlayed-sm-and-down&amp;show-alert=yes">
+    <meta property="og:title" content="Front-end framework with a built-in dark mode and full customizability using CSS variables; great for building dashboards and tools">
+    <meta property="og:description" content="Halfmoon is a responsive front-end framework that is great for building dashboards and tools. Built-in dark mode, full customizability using CSS variables (around 1,500 variables), optional JavaScript library (no jQuery), Bootstrap like classes, and cross-browser compatibility (including IE11).">
+    <meta property="og:image" content="https://res.cloudinary.com/halfmoon-ui/image/upload/v1599770364/halfmoon-og-image-1.1.0_uofgby.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="fb:app_id" content="2560228000973437">
+    <meta name="twitter:site" content="@halfmoonui">
+    <!-- Fav and Title -->
+    <link rel="icon" href="/static/halfmoon/img/halfmoon-fav-alt.png">
+    <title>Teau - Data Science</title>
+    <!-- Halfmoon -->
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon.min.css" rel="stylesheet" />
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <!-- Roboto font (Used when Apple system fonts are not available) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Documentation styles -->
+    <link href="/static/site/css/documentation-styles-4.css" rel="stylesheet">
+</head>
+
+<body class="dark-mode with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true" data-sidebar-shortcut-enabled="true">
+    <!-- Page wrapper start -->
+    <div id="page-wrapper" class="page-wrapper with-navbar with-sidebar with-navbar-fixed-bottom" data-sidebar-type="overlayed-sm-and-down">
+        <!-- Sticky alerts -->
+        <div class="sticky-alerts"></div>
+        <!-- Navbar start -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <button id="toggle-sidebar-btn" class="btn btn-action" type="button" onclick="halfmoon.toggleSidebar()">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+            <a href="#" class="navbar-brand ml-10 ml-sm-20">
+               <!-- <img src="img/lin.png" alt="fake-logo">-->
+                <span class="d-none d-sm-flex">DATA SCIENCE</span>
+            </a>
+            <div class="navbar-content ml-auto">
+                
+                <!-- Link styled as circle primary button -->
+                <a href="#" style="margin-right: 15px;" class="btn btn-square btn-primary rounded-circle" role="button">&plus;</a>
+                <!-- rounded-circle = border-radius: 50% -->
+                <button class="btn btn-action mr-5" style="margin-right: 15px;" type="button" onclick="halfmoon.toggleDarkMode()">
+                    <i class="fa fa-moon-o" aria-hidden="true"></i>
+                    <span class="sr-only">Toggle dark mode</span>
+                </button>
+                <a href="#" class="btn btn-primary" role="button">Download</a>
+            </div>
+        </nav>
+        <!-- Navbar end -->
+        <!-- Sidebar overlay -->
+        <div class="overlayed-all" onclick="halfmoon.toggleSidebar()"></div>
+        <!-- Sidebar start -->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+                <div class="sidebar-content">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="mt-10 font-size-12">
+                        Press <kbd>/</kbd> to focus
+                    </div>
+                </div>
+                <h5 class="sidebar-title">Getting started</h5>
+                <div class="sidebar-divider"></div>
+                <a href="#" class="sidebar-link sidebar-link-with-icon active">
+                    <span class="sidebar-icon">
+                        <i class="fa fa-code" aria-hidden="true"></i>
+                    </span>
+                    Introduction
+                </a>
+                <a href="#" class="sidebar-link sidebar-link-with-icon">
+                    <span class="sidebar-icon">
+                        <i class="fa fa-terminal" aria-hidden="true"></i>
+                    </span>
+                    CLI commands
+                </a>
+                <br />
+                <h5 class="sidebar-title">Components</h5>
+                <div class="sidebar-divider"></div>
+                <a href="#" class="sidebar-link sidebar-link-with-icon">
+                    <span class="sidebar-icon">
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                    </span>
+                    File explorer
+                </a>
+                <a href="#" class="sidebar-link sidebar-link-with-icon">
+                    <span class="sidebar-icon">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    </span>
+                    Spreadsheet
+                </a>
+                <a href="#" class="sidebar-link sidebar-link-with-icon">
+                    <span class="sidebar-icon">
+                        <i class="fa fa-map-o" aria-hidden="true"></i>
+                    </span>
+                    Map
+                </a>
+                <a href="#" class="sidebar-link sidebar-link-with-icon">
+                    <span class="sidebar-icon">
+                        <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                    </span>
+                    Messenger
+                </a>
+            </div>
+        </div>
+        <!-- Sidebar end -->
+        <!-- Content wrapper start -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row row-eq-spacing-lg">
+                    <div class="col-lg-9">
+                        <div class="content">
+                            <h1 class="content-title">
+                                <b>HOME</b>
+                            </h1>
+                            <div class="fake-content"></div>
+                            <div class="fake-content"></div>
+                        </div>
+                        <div class="content">
+                            <h2 class="content-title">
+                                <b>TEAU DATA SCIENCE</b>
+                            </h2>
+
+                            <h5>
+                                 <img src="https://camo.githubusercontent.com/94e99d942d83f53f66bf9e8ef05d8ae91b3e75ffaaadf94b0e50a53f3121aa4d/68747470733a2f2f736f757263652e756e73706c6173682e636f6d2f36456e54507650504c3649" class="img-fluid" alt="responsive image">
+                                Gain the career-building Python skills you need to succeed as a data scientist.<br />
+                                No prior coding experience required.<br /><br />
+
+                                In this track, we'll learn how this versatile language(<b>Python</b>) allows you to <b>import, clean, manipulate,and visualize data.</b><br />
+                                all integral skills for any aspiring data professional or researcher.<br /><br />
+
+                                Through interactive exercises, you'll get hands-on with some of the most popular Python libraries, including <b>pandas, NumPy, Matplotlib,</b> and many more.<br /><br />
+
+                                We'll then work with real-world datasets to learn the statistical and machine learning techniques you need to train decision trees and use natural language processing (NLP).<br />
+                                Fork this repository, grow your Python skills/Help others grow their skills, and begin your journey to becoming a confident data scientist.<br /><br />
+
+                                More info we'll be addded by members<br />
+                            </h5>
+                           
+                            <br>
+                        </div>
+                        <!-- Content -->
+                        <div class="content">
+                            <h2 class="content-title">
+                                It was going to rain
+                            </h2>
+                            <!-- Circle image 
+<img src="img/pro.png" class="img-fluid rounded-circle" alt="rounded circle image">-->
+                            <p>
+                                The weather forecast didn't say that, but the steel plate in his hip did. He had learned over the years to trust his hip over the weatherman. It was going to rain, so he better get outside and prepare. Sleeping in his car was never the plan but sometimes things don't work out as planned. This had been his life for the last three months and he was just beginning to get used to it. He didn't actually enjoy it, but he had accepted it and come to terms with it. Or at least he thought he had. All that changed when he put the key into the ignition, turned it and the engine didn't make a sound.
+                            </p>
+                            <!-- Most commonly used buttons -->
+                            <button class="btn" style="margin-right: 15px;" type="button">Accept</button>
+                            <button class="btn btn-primary" style="margin-right: 15px;" type="button">Consider</button>
+                            <button class="btn btn-danger" style="margin-right: 15px;" type="button">Reject</button>
+                            <button class="btn btn-link" style="margin-right: 15px;" type="button">Link</button>
+                        </div>
+                        <!-- First card -->
+                        <div class="card">
+                            <h2 class="card-title">
+                                It was going to rain
+                            </h2>
+                            <p>
+                                The weather forecast didn't say that, but the steel plate in his hip did. He had learned over the years to trust his hip over the weatherman. It was going to rain, so he better get outside and prepare...
+                            </p>
+                            <!-- Most commonly used buttons -->
+                            <button class="btn" style="margin-right: 15px;" type="button">Accept</button>
+                            <button class="btn btn-primary" style="margin-right: 15px;" type="button">Consider</button>
+                            <button class="btn btn-danger" style="margin-right: 15px;" type="button">Reject</button>
+                            <button class="btn btn-link" style="margin-right: 15px;" type="button">Link</button>
+                            <div class="text-right">
+                                <!-- text-right = text-align: right -->
+                                <a href="#" class="btn">Read more</a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="fake-content"></div>
+                            <div class="fake-content w-150"></div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-lg-3 d-none d-lg-block">
+                        <div class="content">
+                            <h2 class="content-title font-size-20">
+                                On this page
+                            </h2>
+                            <!-- Second card (parent container's width changed using utility classes) -->
+                            <div class="w-400 mw-full">
+                                <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+                                <p>Home page</p>
+                            </div>
+                            <div class="fake-content"></div>
+                            <div class="fake-content"></div>
+                            <div class="fake-content"></div>
+                            <div class="fake-content"></div>
+                            <div class="fake-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content wrapper end -->
+        <!-- Navbar fixed bottom start -->
+        <nav class="navbar navbar-fixed-bottom">
+            <div class="content">
+                    <h3 class="content-title hidden-dm">Light mode is on</h3> <!-- hidden-dm = display: none (only in dark mode) -->
+                    <h3 class="content-title hidden-lm">Dark mode is on</h3> <!-- hidden-lm = display: none (only in light mode) -->
+                </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-question-circle-o mr-5" aria-hidden="true"></i>
+                        Help
+                    </a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                &copy; 2021 aduki, Inc.
+            </span>
+        </nav>
+        <!-- Navbar fixed bottom end -->
+    </div>
+    <!-- Page wrapper end -->
+    <!-- Halfmoon JS -->
+    <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+    <script type="text/javascript">
+    // Toasts a default alert
+    function toastAlert() {
+        var alertContent = "This is a default alert with <a href='#' class='alert-link'>a link</a> being toasted.";
+        // Built-in function
+        halfmoon.initStickyAlert({
+            content: alertContent,
+            title: "Toast!"
+        })
+    }
+
+    // Toggles the parent's dark mode (if this page is loaded in an iFrame) 
+    function parentToggleDarkmode() {
+        window.parent.toggleDarkModeFromChild();
+    }
+
+    // Override the dark mode toggle function to call the parent's one
+    // Again, this is for the case where the page is loaded in an iFrame
+    if (window !== window.parent) {
+        halfmoon.toggleDarkMode = parentToggleDarkmode;
+    }
+    </script>
+</body>
+
+</html>
