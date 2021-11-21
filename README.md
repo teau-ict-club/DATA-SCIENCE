@@ -1,5 +1,5 @@
 # DATA-SCIENCE
-![IMAGE](https://source.unsplash.com/6EnTPvPPL6I)
+![IMAGE](Group 1(2).png)
 
 
 Gain the career-building Python skills you need to succeed as a data scientist.<br />
